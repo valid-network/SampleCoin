@@ -653,7 +653,7 @@ contract Crowdsale is ReentrancyGuard {
      * buyTokens directly when purchasing tokens from a contract.
      */
     function () external payable {
-        buyTokens(msg.sender);
+        revert();
     }
 
     /**
@@ -780,9 +780,10 @@ contract Crowdsale is ReentrancyGuard {
 }
 
 contract BatchERC20 is ERC20, Pausable {
+using SafeMath for uint256;
     function batchTransfer(address[] _receivers, uint256 _value) public whenNotPaused returns (bool) {
         uint cnt = _receivers.length;
-        uint256 amount = uint256(cnt) * _value;
+        uint256 amount = uint256(cnt).mul(_value);
         require(cnt > 0 && cnt <= 20);
         require(_value > 0 && _balances[msg.sender] >= amount);
 
