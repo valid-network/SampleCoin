@@ -1,4 +1,5 @@
 pragma solidity ^0.4.24;
+
 /**
  * @title SafeMath
  * @dev Math operations with safety checks that revert on error
@@ -209,7 +210,7 @@ contract ERC20 is IERC20 {
     * @param value The amount to be transferred.
     */
     function transfer(address to, uint256 value) public returns (bool) {
-        _transfer(msg.sender, to, value);
+        _transfer(msg.sender, to, value);		
 		return true;
     }
 
@@ -316,7 +317,7 @@ contract ERC20 is IERC20 {
      * @param account The account whose tokens will be burnt.
      * @param value The amount that will be burnt.
      */
-    function _burn(address account, uint256 value) internal {
+    function _burn(address account, uint256 value) internal {        
         require(account != address(0));
 
         _totalSupply = _totalSupply.sub(value);
@@ -779,8 +780,10 @@ contract Crowdsale is ReentrancyGuard {
     }
 }
 
+
+
 contract BatchERC20 is ERC20, Pausable {
-using SafeMath for uint256;
+	using SafeMath for uint256;
     function batchTransfer(address[] _receivers, uint256 _value) public whenNotPaused returns (bool) {
         uint cnt = _receivers.length;
         uint256 amount = uint256(cnt).mul(_value);
